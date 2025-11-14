@@ -127,12 +127,12 @@ python main.py --video ./inference/video.avi --task both --output-dir ./results
 
 ### Option 1: Download Pre-Generated Datasets (Recommended)
 
-**Save time by downloading pre-generated datasets and CLIP embeddings from Google Drive:**
+**Save time by downloading pre-generated datasets and CLIP embeddings from DropBox:**
 
-**Google Drive Links:**
-- **UCF101_videos**: [Download UCF101 Dataset (40 actions)](https://drive.google.com/drive/folders/1iyrCKWp24AundsF7vDZBxMiVMO9VRGDv?usp=sharing)
-- **outlier_artifacts**: [Download Outlier Artifacts (videos, CSVs, CLIP embeddings)](https://drive.google.com/drive/folders/1eQjg5tfoZRjaGXr9bgFtUn8fXLkb-RkD?usp=sharing)
-- **shuffled_artifacts**: [Download Shuffled Artifacts (videos, CSVs)](https://drive.google.com/drive/folders/149mbjWLx2dE8C6Ob5JzExf-HPkRVw4Vv?usp=sharing)
+**DropBox Links:**
+- **UCF101_videos**: [Download UCF101 Dataset (40 actions)](https://www.dropbox.com/scl/fo/tebpz0x7f3osgymc4n97o/ANS_by-ITosBfD6sWIjWw10?rlkey=0wmfn9xvy4gk2i2fr4bjgf4eh&st=ig5izaxd&dl=0)
+- **outlier_artifacts**: [Download Outlier Artifacts (videos, CSVs, CLIP embeddings)](https://www.dropbox.com/scl/fo/hw1w8teuq317hp5o5o8wp/ACaz-rY868mRntwQQxYRd2s?rlkey=rzv7jwo17ru4pkmflbpkp5kia&st=r0mv3oht&dl=0)
+- **shuffled_artifacts**: [Download Shuffled Artifacts (videos, CSVs)](https://www.dropbox.com/scl/fo/vcy4o5uwhzhysoyc48pvp/APnmXuwNorNFF91PXo4rTEc?rlkey=5tgzlaedh6ksg4gobpa4kw0ww&st=g86upyis&dl=0)
 
 **What's included:**
 - **UCF101_videos/**: First 40 action categories (1000 videos total) from UCF101 dataset
@@ -140,7 +140,7 @@ python main.py --video ./inference/video.avi --task both --output-dir ./results
 - **shuffled_artifacts/**: Pre-generated shuffled videos and CSVs
 
 **Setup Instructions:**
-1. Download all folders from the Google Drive links above
+1. Download all folders from the DropBox links above
 2. Extract and place `UCF101_videos/` in the project root directory
 3. Copy the contents of downloaded artifact folders to the corresponding empty folders in your project:
    - `outlier_artifacts/` → `./outlier_artifacts/`
@@ -160,7 +160,7 @@ If you want to generate everything from scratch, follow these steps:
 
 ### Step 1: Prepare UCF101 Dataset
 
-Download and extract UCF101 videos (you can download from the official source or use the 40-action subset from Google Drive):
+Download and extract UCF101 videos (you can download from the official source or use the 40-action subset from DropBox):
 
 ```bash
 # Your UCF101 videos should be in:

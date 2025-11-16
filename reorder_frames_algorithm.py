@@ -41,10 +41,26 @@ def compute_mse_matrix(frames: torch.Tensor) -> torch.Tensor:
         mse[i,j]: mean squared error between frame i and j
     """
     N = frames.shape[0]
-    flat = frames.view(N, -1)                   # [N, D]
+    flat = frames.view(N, -1).float()           # [N, D]
 
+    # Apply per-video PCA to obtain a lower-dimensional, denoised
+    # representation before computing pairwise distances. This keeps
+    # the computation fully unsupervised while focusing on dominant
+    # structural variation across frames.
+    if N > 1:
+        flat_mean = flat.mean(dim=0, keepdim=True)
+        X = flat - flat_mean                    # [N, D]
+        k = 64
+
+        if k > 0:
+            U, S, Vh = torch.linalg.svd(X, full_matrices=False)
+            Vh_k = Vh[:k, :]                    # [k, D]
+            flat = X @ Vh_k.t()                 # [N, k]
+        else:
+            flat = X
+
+    # Now compute pairwise MSE in the (optionally) PCA-reduced feature space
     sq = (flat ** 2).sum(dim=1, keepdim=True)   # [N,1]
-    # dist2[i,j] = ||flat[i] - flat[j]||^2
     dist2 = sq + sq.t() - 2.0 * (flat @ flat.t())
     dist2 = torch.clamp(dist2, min=0.0)
 
@@ -311,7 +327,6 @@ def load_video_yuv(video_path: str, expected_num_frames: int = None) -> torch.Te
 # =========================
 # Path construction
 # =========================
-    
 
 def build_best_path(mse: torch.Tensor):
     """Build temporal path using MST diameter endpoints and double-ended greedy growth."""
@@ -325,7 +340,7 @@ def build_best_path(mse: torch.Tensor):
     # grow from both ends
     path = double_ended_greedy_from_pair(a, b, mse)
 
-    # keep your local refinement
+    # local refinement
     path = refine_path(path, mse)
     return path
 
@@ -394,9 +409,9 @@ def predict_order_for_video(video_id: str,
     expected_num_frames = len(shuffled_order)
 
     video_path = find_video_path(video_id, videos_dir)
-    # frames = load_video_gray(video_path, expected_num_frames=expected_num_frames)
     frames = load_video_yuv(video_path, expected_num_frames=expected_num_frames)
-    frames = frames[:, 0:1, :, :] 
+    # use Y channel only
+    frames = frames[:, 0:1, :, :]
     N = frames.shape[0]
 
     if N != expected_num_frames:
@@ -412,9 +427,10 @@ def predict_order_for_video(video_id: str,
     if N <= 1:
         return [int(x) for x in shuffled_order]
 
-    mse = compute_blurred_mse_matrix(frames) 
+    # PCA + blurred MSE similarity
+    mse = compute_blurred_mse_matrix(frames)
     path = build_best_path(mse)
-    
+
     predicted = [int(shuffled_order[idx]) for idx in path]
     return predicted
 
@@ -495,5 +511,3 @@ def main():
 
 if __name__ == "__main__":
     main()
-
-

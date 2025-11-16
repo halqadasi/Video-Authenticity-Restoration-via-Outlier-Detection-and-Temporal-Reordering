@@ -22,8 +22,8 @@ CSV Format (one CSV per action, videos as rows):
     Columns: video_id, predicted_frames_list
 
 Usage:
-  python evaluate_shuffled_predictions.py --csv-dir ./shuffled_artifacts/shuffled_CSVs --predictions ./shuffled_artifacts/predictions
-  python evaluate_shuffled_predictions.py --csv-dir ./shuffled_artifacts/shuffled_CSVs --predictions ./shuffled_artifacts/predictions --action-filter ApplyEyeMakeup
+  python evaluate_shuffled_predictions.py --csv-dir ./shuffled_artifacts/shuffled_CSVs --predictions ./shuffled_artifacts/ordered_CSVs
+  python evaluate_shuffled_predictions.py --csv-dir ./shuffled_artifacts/shuffled_CSVs --predictions ./shuffled_artifacts/ordered_CSVs --action-filter ApplyEyeMakeup
 """
 
 import argparse

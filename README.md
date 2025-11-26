@@ -275,12 +275,3 @@ python generate_ordered_videos_from_predictions.py \
   --videos-dir ./shuffled_artifacts/shuffled_videos \
   --output-dir ./shuffled_artifacts/reordered_videos
 ```
-
-
-
-## Acknowledgments
-
-- CLIP: Learning Transferable Visual Models From Natural Language Supervision (OpenAI)
-- DINOv2: Learning Robust Visual Features without Supervision (Meta AI)
-- UCF101: Action Recognition Dataset
-- RAPIDS cuML: GPU-accelerated Machine Learning

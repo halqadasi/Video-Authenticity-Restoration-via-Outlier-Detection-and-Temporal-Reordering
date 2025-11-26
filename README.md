@@ -275,3 +275,14 @@ python generate_ordered_videos_from_predictions.py \
   --videos-dir ./shuffled_artifacts/shuffled_videos \
   --output-dir ./shuffled_artifacts/reordered_videos
 ```
+
+
+
+
+## Performance
+
+The outlier-frame detector was evaluated on 235,049 frames from 1000 UCF101 videos, containing 16.7% injected outliers. Using CLIP embeddings with DBSCAN, the system reached 0.9778 precision, 0.9973 recall, and 0.9818 F1, with DINOv2 and ResNet32 achieving similarly high performance. These results confirm that foundation-model embeddings form tight inlier clusters and enable highly accurate removal of foreign frames.
+
+Temporal reordering was assessed using Kendall’s Tau (τ) and achieved a median τ of 0.966 and mean τ of 0.791, showing that most videos recover near-perfect temporal structure. As shown in the figure below, over 60% of videos fall above τ=0.9, while the lower tail corresponds to cyclic or fast-motion actions (e.g., BodyWeightSquats, BoxingSpeedBag, Diving) where visual similarity becomes ambiguous. Overall, the pipeline provides strong video authenticity restoration across diverse motion patterns.
+
+![Performance Results](assets/performance.png)
